@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HiveSectionListItem } from '../models/hive-section-list-item';
 import { HiveService } from '../services/hive.service';
+import { HiveSectionService } from '../services/hive-section.service';
 
 @Component({
   selector: 'app-hive-section-list',
@@ -20,5 +21,9 @@ export class HiveSectionListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
+  this.route.params.subscribe(p => {
+    this.hiveId = p['id'];
+    this.hiveService.getHiveSections(this.hiveId).subscribe(s => this.hiveSections = s);
+  })
+}
 }
