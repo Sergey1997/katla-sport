@@ -49,6 +49,6 @@ namespace KatlaSport.Services.HiveManagement
         /// <param name="hiveId">A hive identifier.</param>
         /// <param name="deletedStatus">Status.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task SetStatus(int hiveId, bool deletedStatus);
+        Task SetStatusAsync(int hiveId, bool deletedStatus);
     }
 }
