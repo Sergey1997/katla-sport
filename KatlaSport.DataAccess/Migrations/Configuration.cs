@@ -142,7 +142,7 @@ namespace KatlaSport.DataAccess.Migrations
                     Name = "Gorka Minsk",
                     Address = "Minsk, Chaveza-30",
                     Code = "HIVE1",
-                    IsDeleted = false,
+                    IsDeleted = true,
                     CreatedBy = creatorId,
                     LastUpdatedBy = creatorId,
                     LastUpdated = timestamp
