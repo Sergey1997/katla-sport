@@ -56,10 +56,28 @@ namespace KatlaSport.Services.HiveManagement
             return hiveSections;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Takes a instance of the <see cref="StoreHiveSection"/> class and set status property.
+        /// </summary>
+        /// <param name="hiveSectionId">A <see cref="int"/></param>
+        /// <param name="deletedStatus">A <see cref="bool"/></param>
+        /// <returns>A <see cref="Task"/> Representing the asynchronous operation.</returns>
         public async Task SetStatusAsync(int hiveSectionId, bool deletedStatus)
         {
-            throw new NotImplementedException();
+            var dbHiveSections = await _context.Sections.Where(h => h.Id == hiveSectionId).ToArrayAsync();
+            if (dbHiveSections.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            var dbHiveSection = dbHiveSections[0];
+            if (dbHiveSection.IsDeleted != deletedStatus)
+            {
+                dbHiveSection.IsDeleted = deletedStatus;
+                dbHiveSection.LastUpdated = DateTime.UtcNow;
+                dbHiveSection.LastUpdatedBy = _userContext.UserId;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
