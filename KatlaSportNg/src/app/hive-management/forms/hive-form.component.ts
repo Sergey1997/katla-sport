@@ -36,14 +36,23 @@ export class HiveFormComponent implements OnInit {
   }
   
   onSubmit() {
+    if(this.existed == true){
+      this.hiveService.updateHive(this.hive).subscribe(c => this.navigateToHives());
+    }
+    else{
+      this.hiveService.addHive(this.hive).subscribe(c => this.navigateToHives());
+    }
   }
 
   onDelete() {
+    this.hiveService.setHiveStatus(this.hive.id, false).subscribe(e => this.hive.isDeleted == false);
   }
 
   onUndelete() {
+    this.hiveService.setHiveStatus(this.hive.id, true).subscribe(e => this.hive.isDeleted == true);
   }
 
   onPurge() {
+    this.hiveService.deleteHive(this.hive.id).subscribe(e => this.navigateToHives());
   }
 }
