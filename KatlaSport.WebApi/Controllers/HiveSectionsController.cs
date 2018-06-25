@@ -47,7 +47,7 @@ namespace KatlaSport.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("add/{hiveId:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.Created, Description = "Creates a new hive section.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Unknown query syntax for the server.")]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Request conflict with current state of server.")]
@@ -65,13 +65,13 @@ namespace KatlaSport.WebApi.Controllers
             }
 
             var section = await _hiveSectionService.CreateHiveSectionAsync(hiveId.Value, createRequest);
-            var location = string.Format("/api/sections/{0}", section.Id);
+            var location = $"/api/sections/{section.Id}";
             return Created(location, section);
 
         }
 
         [HttpPut]
-        [Route("{id:int:min(1)}")]
+        [Route("add/{hiveId:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Updated hive section by id.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Unknown query syntax for the server.")]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Request conflict with current state of server.")]

@@ -17,22 +17,24 @@ export class HiveSectionListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private hiveService: HiveService
+    private hiveService: HiveService,
+    private hiveSectionService: HiveSectionService
   ) { }
 
   ngOnInit() {
-  this.route.params.subscribe(p => {
-    this.hiveId = p['id'];
-    this.hiveService.getHiveSections(this.hiveId).subscribe(s => this.hiveSections = s);
-  })
-  }
-  onDelete(hiveSectionId: number) {
-    var section = this.hiveSections.find(s => s.id == hiveSectionId);
-    this.hiveService.setHiveStatus(hiveSectionId, true).subscribe(c => section.isDeleted = true);
+    this.route.params.subscribe(p => {
+      this.hiveId = p['id'];
+      this.hiveService.getHiveSections(this.hiveId).subscribe(s => this.hiveSections = s);
+    })
   }
 
-  onRestore(hiveSectionId: number) {
-    var section = this.hiveSections.find(s => s.id == hiveSectionId);
-    this.hiveService.setHiveStatus(hiveSectionId, false).subscribe(c => section.isDeleted = false);
+  onDelete(hiveSectionId: number) {
+    var hiveSection = this.hiveSections.find(h => h.id == hiveSectionId);
+    this.hiveSectionService.setHiveSectionStatus(hiveSectionId, true).subscribe(c => hiveSection.isDeleted = true);
+  }
+
+  onUnDelete(hiveSectionId: number) {
+    var hiveSection = this.hiveSections.find(h => h.id == hiveSectionId);
+    this.hiveSectionService.setHiveSectionStatus(hiveSectionId, false).subscribe(c => hiveSection.isDeleted = false);
   }
 }
