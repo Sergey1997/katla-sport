@@ -66,6 +66,8 @@ namespace KatlaSport.Services.HiveManagement
             var dbHive = Mapper.Map<UpdateHiveRequest, DbHive>(createRequest);
             dbHive.CreatedBy = _userContext.UserId;
             dbHive.LastUpdatedBy = _userContext.UserId;
+            dbHive.Created = DateTime.Now;
+            dbHive.LastUpdated = DateTime.Now;
             _context.Hives.Add(dbHive);
 
             await _context.SaveChangesAsync();

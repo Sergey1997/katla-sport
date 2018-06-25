@@ -12,6 +12,8 @@ export class HiveFormComponent implements OnInit {
 
   hive = new Hive(0, "", "", "", false, "");
   existed = false;
+  hiveId = 0;
+  lastUpdate = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +26,7 @@ export class HiveFormComponent implements OnInit {
       if (p['id'] === undefined) return;
       this.hiveService.getHive(p['id']).subscribe(h => this.hive = h);
       this.existed = true;
+      this.hiveId = p['id'];
     });
   }
 
